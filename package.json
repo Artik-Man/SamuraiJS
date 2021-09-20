@@ -1,0 +1,43 @@
+{
+  "name": "samuraijs",
+  "version": "0.0.1",
+  "description": "Super simple [Nunjucks + TypeScript + Sass] builder",
+  "main": "src/public_api.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild src/public_api.ts src/builder.ts src/server.ts src/config.ts --platform=node --minify --sourcemap --outdir=dist && tsc --emitDeclarationOnly --outDir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Artik-Man/SamuraiJS.git"
+  },
+  "keywords": [
+    "Nunjucks",
+    "TypeScript",
+    "Sass",
+    "SCSS",
+    "njk",
+    "ts",
+    "builder",
+    "server"
+  ],
+  "author": "mail@artik.me",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Artik-Man/SamuraiJS/issues"
+  },
+  "homepage": "https://github.com/Artik-Man/SamuraiJS#readme",
+  "devDependencies": {
+    "@types/node": "^16.9.4"
+  },
+  "dependencies": {
+    "browser-sync": "^2.27.5",
+    "esbuild": "^0.12.28",
+    "node-sass": "^6.0.1",
+    "nunjucks": "^3.2.3",
+    "sass": "^1.41.1",
+    "typescript": "^4.4.3"
+  },
+  "peerDependencies": {
+  }
+}
