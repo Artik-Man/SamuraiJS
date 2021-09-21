@@ -5,7 +5,7 @@
   "main": "src/public_api.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild src/public_api.ts src/builder.ts src/server.ts src/config.ts --platform=node --minify --sourcemap --outdir=dist && tsc --emitDeclarationOnly --outDir dist"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
