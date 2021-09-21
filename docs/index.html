@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SamuraiJS</title>
+    <style>
+        h2, h3 {
+            margin: 2em 0 1em !important;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-md" style="padding: 20vh 0">
+    
+    <h1>SamuraiJS</h1>
+<p>Super simple
+<a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> +
+<a href="https://sass-lang.com/">TypeScript</a> +
+<a href="https://sass-lang.com/">Sass</a> builder</p>
+<h2>Installation</h2>
+<pre><code class="language-bash">npm i samuraijs
+</code></pre>
+<h2>Configuration</h2>
+<h3>Step 1</h3>
+<p><em>samurai.js</em></p>
+<pre><code class="language-javascript">import {Samurai} from &quot;samuraijs&quot;;
+
+new Samurai({
+    paths: {
+        source: 'src',
+        destination: 'dist',
+        assets: ['src/assets'],
+        exclude: ['src/templates', 'src/styles', 'src/scripts']
+    },
+    // logLevel: 'debug',
+    nunjucks: {
+        // https://mozilla.github.io/nunjucks/api.html#configure
+        autoescape: true,
+        trimBlocks: true,
+        noCache: true,
+        globals: {
+            // https://mozilla.github.io/nunjucks/api.html#addglobal
+            hello: (name) =&gt; {
+                return `Hello, ${name}`
+            }
+        }
+    },
+    esbuild: {
+        // https://esbuild.github.io/api/#simple-options
+        minify: true,
+        bundle: true,
+        write: false
+    },
+    sass: {
+        // https://sass-lang.com/documentation/js-api#options
+        outputStyle: &quot;compressed&quot;
+    },
+    server: {
+        port: 3000,
+        open: false
+    }
+});
+</code></pre>
+<h3>Step 2</h3>
+<p>Add scripts to your <code>package.json</code> and <code>&quot;type&quot;: &quot;module&quot;</code>:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;serve&quot;: &quot;node samurai.js --serve&quot;,
+    &quot;build&quot;: &quot;node samurai.js --build&quot;
+  },
+  &quot;type&quot;: &quot;module&quot;
+}
+</code></pre>
+<h2>How it works</h2>
+<p>Source directory tree:</p>
+<pre><code class="language-llvm">/src/
+|  index.njk *
+|  index.json
+|  index.ts
+|  index.scss
+|  
+|  scripts.ts
+|  styles.scss
+|  
+|  /another-route/
+|  |  index.njk *
+|  |  index.json
+|  |  index.ts
+|  |  index.scss
+|  |  
+|  |  page2.njk
+|  |  page2.json
+|  |
+|  /templates/
+|  |  _header.njk
+|  |  _footer.njk
+   
+   
+* - required file 
+</code></pre>
+<p>For each *.njk components will be created a *.html file that includes a template, script and style:</p>
+<pre><code class="language-html">
+&lt;style&gt;
+    /* Content of *.scss file (compiled) */
+&lt;/style&gt;
+&lt;!-- Content of *.njk file (compiled) --&gt;
+&lt;script&gt;
+    // Content of *.ts file (compiled)
+&lt;/script&gt;
+</code></pre>
+<p>Every <strong>entry-point</strong> can have *.json file that includes context for *.njk file:</p>
+<pre><code class="language-llvm">/route-one/
+|  page.njk
+|  page.json
+</code></pre>
+<p><em>page.njk</em></p>
+<pre><code class="language-html"> &lt;ul&gt;
+    {% for item in list %}
+    &lt;li&gt;{{ item }}&lt;/li&gt;
+    {% endfor %}
+ &lt;/ul&gt;
+</code></pre>
+<p><em>page.json</em></p>
+<pre><code class="language-json">{
+  &quot;list&quot;: [
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}
+</code></pre>
+<p>*.njk files starting with _ will be skipped. Such files will <strong>not</strong> be considered entry points: <code>_menu.njk</code></p>
+<p>Every <strong>not-entry-point *.njk</strong> file should not have context *.json file! If this file is exist, it will be ignored.</p>
+<p>Another files (like <code>scripts.ts</code> or <code>styles.scss</code>) will be compiled and placed in destination path.</p>
+<p>Assets will just be copied to the destination directory.</p>
+<h2>Example projects:</h2>
+<ul>
+<li><a href="https://github.com/Artik-Man/artik.me">https://github.com/Artik-Man/Artik.me</a></li>
+<li><a href="https://github.com/Artik-Man/HTML-Practice">https://github.com/Artik-Man/HTML-Practice</a></li>
+</ul>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

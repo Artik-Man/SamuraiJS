@@ -59,14 +59,15 @@ new Samurai({
 
 ### Step 2
 
-Add scripts to your `package.json`:
+Add scripts to your `package.json` and `"type": "module"`:
 
 ```json
 {
   "scripts": {
     "serve": "node samurai.js --serve",
     "build": "node samurai.js --build"
-  }
+  },
+  "type": "module"
 }
 ```
 
@@ -74,28 +75,28 @@ Add scripts to your `package.json`:
 
 Source directory tree:
 
-```
+```llvm
 /src/
-| index.njk *
-| index.json
-| index.ts
-| index.scss
-| 
-| scripts.ts
-| styles.scss
-| 
-| /another-route/
-|   | index.njk *
-|   | index.json
-|   | index.ts
-|   | index.scss
-|   | 
-|   | page2.njk
-|   | page2.json
-|   
-| /templates/
-|   | _header.njk
-|   | _footer.njk
+|  index.njk *
+|  index.json
+|  index.ts
+|  index.scss
+|  
+|  scripts.ts
+|  styles.scss
+|  
+|  /another-route/
+|  |  index.njk *
+|  |  index.json
+|  |  index.ts
+|  |  index.scss
+|  |  
+|  |  page2.njk
+|  |  page2.json
+|  |
+|  /templates/
+|  |  _header.njk
+|  |  _footer.njk
    
    
 * - required file 
@@ -116,7 +117,7 @@ For each *.njk components will be created a *.html file that includes a template
 
 Every **entry-point** can have *.json file that includes context for *.njk file:
 
-```
+```llvm
 /route-one/
 |  page.njk
 |  page.json
@@ -125,12 +126,11 @@ Every **entry-point** can have *.json file that includes context for *.njk file:
 *page.njk*
 
 ```html
-
-<ul>
+ <ul>
     {% for item in list %}
     <li>{{ item }}</li>
     {% endfor %}
-</ul>
+ </ul>
 ```
 
 *page.json*
@@ -147,8 +147,7 @@ Every **entry-point** can have *.json file that includes context for *.njk file:
 }
 ```
 
-*.njk files starting with _ will be skipped.
-Such files will **not** be considered entry points: `_menu.njk`
+*.njk files starting with _ will be skipped. Such files will **not** be considered entry points: `_menu.njk`
 
 Every **not-entry-point \*.njk** file should not have context *.json file! If this file is exist, it will be ignored.
 
@@ -157,5 +156,6 @@ Another files (like `scripts.ts` or `styles.scss`) will be compiled and placed i
 Assets will just be copied to the destination directory.
 
 ## Example projects:
-* [https://github.com/Artik-Man/Artik.me](https://github.com/Artik-Man/HTML-Practice)
+
+* [https://github.com/Artik-Man/Artik.me](https://github.com/Artik-Man/artik.me)
 * [https://github.com/Artik-Man/HTML-Practice](https://github.com/Artik-Man/HTML-Practice)

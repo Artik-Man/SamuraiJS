@@ -1,6 +1,6 @@
 import { copyFile, existsSync, mkdir, readdir, readFile, rmdirSync, statSync, writeFile } from 'fs';
 import { dirname, extname, relative, resolve } from 'path';
-import { build as esbuild } from 'esbuild';
+import esbuild from 'esbuild';
 import nunjucks from 'nunjucks'
 import sass from 'node-sass';
 import { Config } from "./config";
@@ -41,7 +41,7 @@ export class Builder {
                 });
             })
         },
-        [this.extensions.ts]: (path) => esbuild({
+        [this.extensions.ts]: (path) => esbuild.build({
             ...this.config.esbuild,
             entryPoints: [path]
         }).then(result => {
