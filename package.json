@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "docs": "node src/docs/docs.js",
-    "publish-library": "npm publish"
+    "publish-library": "npm publish && npm deprecate samuraijs@\"<0.0.6\" \"outdated package version\""
   },
   "type": "module",
   "repository": {
