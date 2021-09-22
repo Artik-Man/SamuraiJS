@@ -3,7 +3,8 @@
 Super simple
 [Nunjucks](https://mozilla.github.io/nunjucks/) +
 [TypeScript](https://sass-lang.com/) +
-[Sass](https://sass-lang.com/) builder
+[Sass](https://sass-lang.com/)
+builder primarily for static sites
 
 ## Installation
 
@@ -59,7 +60,7 @@ new Samurai({
 
 ### Step 2
 
-Add scripts to your `package.json` and `"type": "module"`:
+Add the following lines to your `package.json`:
 
 ```json
 {
@@ -75,7 +76,7 @@ Add scripts to your `package.json` and `"type": "module"`:
 
 Source directory tree:
 
-```llvm
+```coffeescript
 /src/
 |  index.njk *
 |  index.json
@@ -94,12 +95,23 @@ Source directory tree:
 |  |  page2.njk
 |  |  page2.json
 |  |
+|  |  _page2-inner-component.njk **
+|  |
 |  /templates/
-|  |  _header.njk
-|  |  _footer.njk
+|  |  _header.njk **
+|  |  _footer.njk **
+|  |
+|  /scripts/
+|  |  module1.ts
+|  |  module2.ts
+|  |
+|  /styles/
+|  |  main-styles.scss
+|  |  utils.scss
    
-   
-* - required file 
+
+* - required file
+** - cannot have context *.json file, inner scripts / styles
 ```
 
 For each *.njk components will be created a *.html file that includes a template, script and style:
@@ -115,9 +127,10 @@ For each *.njk components will be created a *.html file that includes a template
 </script>
 ```
 
-Every **entry-point** can have *.json file that includes context for *.njk file:
+Every **entry-point** can have *.json file named like this entry-point. 
+This *.json includes context for *.njk file:
 
-```llvm
+```coffeescript
 /route-one/
 |  page.njk
 |  page.json
@@ -147,9 +160,9 @@ Every **entry-point** can have *.json file that includes context for *.njk file:
 }
 ```
 
-*.njk files starting with _ will be skipped. Such files will **not** be considered entry points: `_menu.njk`
+*.njk files starting with `_` will be skipped. Such files will **not** be considered entry points: `_menu.njk`.
 
-Every **not-entry-point \*.njk** file should not have context *.json file! If this file is exist, it will be ignored.
+Every **not-entry-point** _*.njk file should not have context *.json file! If this file is exist, it will be ignored.
 
 Another files (like `scripts.ts` or `styles.scss`) will be compiled and placed in destination path.
 
