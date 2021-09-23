@@ -1,6 +1,6 @@
 {
   "name": "samuraijs",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Super simple [Nunjucks + TypeScript + Sass] builder",
   "main": "dist/public_api.js",
   "scripts": {

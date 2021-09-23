@@ -227,6 +227,11 @@ export class Builder {
 
                 if (ext === this.extensions.ts && !existsSync(fullPath.slice(0, -1 * ext.length) + this.extensions.njk)) {
                     this.buildScripts(fullPath);
+                    return
+                }
+
+                if (file.indexOf('_') !== 0) {
+                    this.copyAsset(fullPath);
                 }
 
             });

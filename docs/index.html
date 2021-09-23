@@ -21,7 +21,8 @@
 <p>Super simple
 <a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> +
 <a href="https://sass-lang.com/">TypeScript</a> +
-<a href="https://sass-lang.com/">Sass</a> builder</p>
+<a href="https://sass-lang.com/">Sass</a>
+builder primarily for static sites</p>
 <h2>Installation</h2>
 <pre><code class="language-bash">npm i samuraijs
 </code></pre>
@@ -67,7 +68,7 @@ new Samurai({
 });
 </code></pre>
 <h3>Step 2</h3>
-<p>Add scripts to your <code>package.json</code> and <code>&quot;type&quot;: &quot;module&quot;</code>:</p>
+<p>Add the following lines to your <code>package.json</code>:</p>
 <pre><code class="language-json">{
   &quot;scripts&quot;: {
     &quot;serve&quot;: &quot;node samurai.js --serve&quot;,
@@ -78,7 +79,7 @@ new Samurai({
 </code></pre>
 <h2>How it works</h2>
 <p>Source directory tree:</p>
-<pre><code class="language-llvm">/src/
+<pre><code class="language-coffeescript">/src/
 |  index.njk *
 |  index.json
 |  index.ts
@@ -96,12 +97,23 @@ new Samurai({
 |  |  page2.njk
 |  |  page2.json
 |  |
+|  |  _page2-inner-component.njk **
+|  |
 |  /templates/
-|  |  _header.njk
-|  |  _footer.njk
+|  |  _header.njk **
+|  |  _footer.njk **
+|  |
+|  /scripts/
+|  |  module1.ts
+|  |  module2.ts
+|  |
+|  /styles/
+|  |  main-styles.scss
+|  |  utils.scss
    
-   
-* - required file 
+
+* - required file
+** - cannot have context *.json file, inner scripts / styles
 </code></pre>
 <p>For each *.njk components will be created a *.html file that includes a template, script and style:</p>
 <pre><code class="language-html">
@@ -113,8 +125,9 @@ new Samurai({
     // Content of *.ts file (compiled)
 &lt;/script&gt;
 </code></pre>
-<p>Every <strong>entry-point</strong> can have *.json file that includes context for *.njk file:</p>
-<pre><code class="language-llvm">/route-one/
+<p>Every <strong>entry-point</strong> can have *.json file named like this entry-point.
+This *.json includes context for *.njk file:</p>
+<pre><code class="language-coffeescript">/route-one/
 |  page.njk
 |  page.json
 </code></pre>
@@ -136,8 +149,8 @@ new Samurai({
   ]
 }
 </code></pre>
-<p>*.njk files starting with _ will be skipped. Such files will <strong>not</strong> be considered entry points: <code>_menu.njk</code></p>
-<p>Every <strong>not-entry-point *.njk</strong> file should not have context *.json file! If this file is exist, it will be ignored.</p>
+<p>*.njk files starting with <code>_</code> will be skipped. Such files will <strong>not</strong> be considered entry points: <code>_menu.njk</code>.</p>
+<p>Every <strong>not-entry-point</strong> _*.njk file should not have context *.json file! If this file is exist, it will be ignored.</p>
 <p>Another files (like <code>scripts.ts</code> or <code>styles.scss</code>) will be compiled and placed in destination path.</p>
 <p>Assets will just be copied to the destination directory.</p>
 <h2>Example projects:</h2>
