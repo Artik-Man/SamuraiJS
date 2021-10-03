@@ -206,6 +206,13 @@ export class Builder {
                     return;
                 }
 
+                if (this.config.fileProcessor && this.config.fileProcessor(fullPath)) {
+                    if (this.config.logLevel === "debug") {
+                        console.log(`File Processor: ${ fullPath }`);
+                    }
+                    return;
+                }
+
                 if (!!this.assetsPaths.find(path => fullPath.includes(path))) {
                     this.copyAsset(fullPath);
                     return;
@@ -232,8 +239,8 @@ export class Builder {
 
                 if (file.indexOf('_') !== 0) {
                     this.copyAsset(fullPath);
+                    return;
                 }
-
             });
 
             this.componentWorker(collection);

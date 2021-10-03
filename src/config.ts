@@ -1,4 +1,4 @@
-import { BuildOptions  as EsBuildOptions} from 'esbuild';
+import { BuildOptions as EsBuildOptions } from 'esbuild';
 import { ConfigureOptions as NunjucksOptions } from 'nunjucks';
 import { Options as SassOptions } from 'sass';
 import { Options as BrowserSyncOptions } from 'browser-sync';
@@ -30,4 +30,5 @@ export interface Config {
     esbuild?: EsBuildOptions;
     sass?: SassOptions;
     server?: BrowserSyncOptions;
+    fileProcessor?: (path: string) => boolean;
 }

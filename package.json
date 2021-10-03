@@ -1,13 +1,13 @@
 {
   "name": "samuraijs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Super simple [Nunjucks + TypeScript + Sass] builder",
   "main": "dist/public_api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "docs": "node src/docs/docs.js",
-    "publish-library": "npm publish && npm deprecate samuraijs@\"<0.0.6\" \"outdated package version\""
+    "publish-library": "npm publish && npm deprecate samuraijs@\"<0.0.8\" \"outdated package version\""
   },
   "type": "module",
   "repository": {
