@@ -54,6 +54,13 @@ new Samurai({
     server: {
         port: 3000,
         open: false
+    },
+    fileProcessor: (path) => {
+        if (path.lastIndexOf('.jpg') === 0) {
+            // Convert a file or do something else ...
+            return true;
+        }
+        return false; // if true, the builder will not touch this file
     }
 });
 ```
@@ -76,7 +83,7 @@ Add the following lines to your `package.json`:
 
 Source directory tree:
 
-```coffeescript
+```
 /src/
 |  index.njk *
 |  index.json
@@ -130,7 +137,7 @@ For each *.njk components will be created a *.html file that includes a template
 Every **entry-point** can have *.json file named like this entry-point. 
 This *.json includes context for *.njk file:
 
-```coffeescript
+```
 /route-one/
 |  page.njk
 |  page.json
@@ -139,11 +146,11 @@ This *.json includes context for *.njk file:
 *page.njk*
 
 ```html
- <ul>
+<ul>
     {% for item in list %}
     <li>{{ item }}</li>
     {% endfor %}
- </ul>
+</ul>
 ```
 
 *page.json*

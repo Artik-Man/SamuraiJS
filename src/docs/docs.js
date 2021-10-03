@@ -12,7 +12,6 @@ env.addGlobal('markdown', src => {
 });
 
 const content = nunjucks.render('./src/docs/index.njk');
-console.log(content)
 writeFile('./docs/index.html', content, err => {
     if (err) {
         console.error(err);

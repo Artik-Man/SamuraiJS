@@ -10,12 +10,16 @@
         h2, h3 {
             margin: 2em 0 1em !important;
         }
+
+        .content {
+            padding: 20vh 0
+        }
     </style>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container-md" style="padding: 20vh 0">
+<div class="container-md content">
     
     <h1>SamuraiJS</h1>
 <p>Super simple
@@ -64,6 +68,13 @@ new Samurai({
     server: {
         port: 3000,
         open: false
+    },
+    fileProcessor: (path) =&gt; {
+        if (path.lastIndexOf('.jpg') === 0) {
+            // Convert a file or do something else ...
+            return true;
+        }
+        return false; // if true, the builder will not touch this file
     }
 });
 </code></pre>
@@ -79,7 +90,7 @@ new Samurai({
 </code></pre>
 <h2>How it works</h2>
 <p>Source directory tree:</p>
-<pre><code class="language-coffeescript">/src/
+<pre><code>/src/
 |  index.njk *
 |  index.json
 |  index.ts
@@ -127,16 +138,16 @@ new Samurai({
 </code></pre>
 <p>Every <strong>entry-point</strong> can have *.json file named like this entry-point.
 This *.json includes context for *.njk file:</p>
-<pre><code class="language-coffeescript">/route-one/
+<pre><code>/route-one/
 |  page.njk
 |  page.json
 </code></pre>
 <p><em>page.njk</em></p>
-<pre><code class="language-html"> &lt;ul&gt;
+<pre><code class="language-html">&lt;ul&gt;
     {% for item in list %}
     &lt;li&gt;{{ item }}&lt;/li&gt;
     {% endfor %}
- &lt;/ul&gt;
+&lt;/ul&gt;
 </code></pre>
 <p><em>page.json</em></p>
 <pre><code class="language-json">{
