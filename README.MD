@@ -16,6 +16,8 @@ npm i samuraijs
 
 ### Step 1
 
+Minimal config:
+
 *samurai.js*
 
 ```javascript
@@ -24,43 +26,7 @@ import {Samurai} from "samuraijs";
 new Samurai({
     paths: {
         source: 'src',
-        destination: 'dist',
-        assets: ['src/assets'],
-        exclude: ['src/templates', 'src/styles', 'src/scripts']
-    },
-    // logLevel: 'debug',
-    nunjucks: {
-        // https://mozilla.github.io/nunjucks/api.html#configure
-        autoescape: true,
-        trimBlocks: true,
-        noCache: true,
-        globals: {
-            // https://mozilla.github.io/nunjucks/api.html#addglobal
-            hello: (name) => {
-                return `Hello, ${name}`
-            }
-        }
-    },
-    esbuild: {
-        // https://esbuild.github.io/api/#simple-options
-        minify: true,
-        bundle: true,
-        write: false
-    },
-    sass: {
-        // https://sass-lang.com/documentation/js-api#options
-        outputStyle: "compressed"
-    },
-    server: {
-        port: 3000,
-        open: false
-    },
-    fileProcessor: (path) => {
-        if (path.lastIndexOf('.jpg') === 0) {
-            // Convert a file or do something else ...
-            return true;
-        }
-        return false; // if true, the builder will not touch this file
+        destination: 'dist'
     }
 });
 ```
@@ -77,6 +43,71 @@ Add the following lines to your `package.json`:
   },
   "type": "module"
 }
+```
+
+### Step 3
+
+Serve the project:
+
+```bash
+npm run serve
+```
+
+Build the project:
+
+```bash
+npm run build
+```
+
+## Full configuration
+
+*samurai.js*
+
+```javascript
+import {Samurai} from "samuraijs";
+
+new Samurai({
+    paths: {
+        source: 'src',
+        destination: 'dist',
+        assets: ['src/assets'],
+        exclude: ['src/templates', 'src/styles', 'src/scripts']
+    },
+    logLevel: 'debug',
+    nunjucks: {
+        // https://mozilla.github.io/nunjucks/api.html#configure
+        autoescape: true,
+        trimBlocks: true,
+        noCache: true,
+        globals: {
+            // https://mozilla.github.io/nunjucks/api.html#addglobal
+            hello: (name) => {
+                return `Hello, ${name}`
+            }
+        }
+    },
+    esbuild: {
+        // https://esbuild.github.io/api/#simple-options
+        minify: true,
+        bundle: true
+    },
+    sass: {
+        // https://sass-lang.com/documentation/js-api#options
+        outputStyle: "compressed"
+    },
+    server: {
+        // https://browsersync.io/docs/options
+        port: 3000,
+        open: false
+    },
+    fileProcessor: (path) => {
+        if (path.lastIndexOf('.jpg') === 0) {
+            // Convert a file or do something else ...
+            return true;
+        }
+        return false; // if true, the builder will not touch this file
+    }
+});
 ```
 
 ## How it works
@@ -134,8 +165,7 @@ For each *.njk components will be created a *.html file that includes a template
 </script>
 ```
 
-Every **entry-point** can have *.json file named like this entry-point. 
-This *.json includes context for *.njk file:
+Every **entry-point** can have *.json file named like this entry-point. This *.json includes context for *.njk file:
 
 ```
 /route-one/
@@ -146,6 +176,7 @@ This *.json includes context for *.njk file:
 *page.njk*
 
 ```html
+
 <ul>
     {% for item in list %}
     <li>{{ item }}</li>

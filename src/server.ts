@@ -9,6 +9,8 @@ export class Server {
         builder.build();
 
         browserSync({
+            port: 3000,
+            open: true,
             ...config.server,
             server: this.config.paths.destination
         });

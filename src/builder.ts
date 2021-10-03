@@ -30,6 +30,7 @@ export class Builder {
         [this.extensions.scss]: (path) => {
             return new Promise((resolve, reject) => {
                 sass.render({
+                    outputStyle: "compressed",
                     ...this.config.sass,
                     file: path
                 }, (err, result) => {
@@ -42,7 +43,10 @@ export class Builder {
             })
         },
         [this.extensions.ts]: (path) => esbuild.build({
+            minify: true,
+            bundle: true,
             ...this.config.esbuild,
+            write: false,
             entryPoints: [path]
         }).then(result => {
             const [contents] = result.outputFiles.map(f => f.text);
@@ -61,6 +65,9 @@ export class Builder {
         this.assetsPaths = (config.paths.assets || []).map(x => resolve(x));
 
         const env = nunjucks.configure({
+            noCache: true,
+            autoescape: true,
+            trimBlocks: true,
             ...config.nunjucks
         });
 

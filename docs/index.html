@@ -32,6 +32,35 @@ builder primarily for static sites</p>
 </code></pre>
 <h2>Configuration</h2>
 <h3>Step 1</h3>
+<p>Minimal config:</p>
+<p><em>samurai.js</em></p>
+<pre><code class="language-javascript">import {Samurai} from &quot;samuraijs&quot;;
+
+new Samurai({
+    paths: {
+        source: 'src',
+        destination: 'dist'
+    }
+});
+</code></pre>
+<h3>Step 2</h3>
+<p>Add the following lines to your <code>package.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;serve&quot;: &quot;node samurai.js --serve&quot;,
+    &quot;build&quot;: &quot;node samurai.js --build&quot;
+  },
+  &quot;type&quot;: &quot;module&quot;
+}
+</code></pre>
+<h3>Step 3</h3>
+<p>Serve the project:</p>
+<pre><code class="language-bash">npm run serve
+</code></pre>
+<p>Build the project:</p>
+<pre><code class="language-bash">npm run build
+</code></pre>
+<h2>Full configuration</h2>
 <p><em>samurai.js</em></p>
 <pre><code class="language-javascript">import {Samurai} from &quot;samuraijs&quot;;
 
@@ -42,7 +71,7 @@ new Samurai({
         assets: ['src/assets'],
         exclude: ['src/templates', 'src/styles', 'src/scripts']
     },
-    // logLevel: 'debug',
+    logLevel: 'debug',
     nunjucks: {
         // https://mozilla.github.io/nunjucks/api.html#configure
         autoescape: true,
@@ -58,14 +87,14 @@ new Samurai({
     esbuild: {
         // https://esbuild.github.io/api/#simple-options
         minify: true,
-        bundle: true,
-        write: false
+        bundle: true
     },
     sass: {
         // https://sass-lang.com/documentation/js-api#options
         outputStyle: &quot;compressed&quot;
     },
     server: {
+        // https://browsersync.io/docs/options
         port: 3000,
         open: false
     },
@@ -77,16 +106,6 @@ new Samurai({
         return false; // if true, the builder will not touch this file
     }
 });
-</code></pre>
-<h3>Step 2</h3>
-<p>Add the following lines to your <code>package.json</code>:</p>
-<pre><code class="language-json">{
-  &quot;scripts&quot;: {
-    &quot;serve&quot;: &quot;node samurai.js --serve&quot;,
-    &quot;build&quot;: &quot;node samurai.js --build&quot;
-  },
-  &quot;type&quot;: &quot;module&quot;
-}
 </code></pre>
 <h2>How it works</h2>
 <p>Source directory tree:</p>
@@ -136,14 +155,14 @@ new Samurai({
     // Content of *.ts file (compiled)
 &lt;/script&gt;
 </code></pre>
-<p>Every <strong>entry-point</strong> can have *.json file named like this entry-point.
-This *.json includes context for *.njk file:</p>
+<p>Every <strong>entry-point</strong> can have *.json file named like this entry-point. This *.json includes context for *.njk file:</p>
 <pre><code>/route-one/
 |  page.njk
 |  page.json
 </code></pre>
 <p><em>page.njk</em></p>
-<pre><code class="language-html">&lt;ul&gt;
+<pre><code class="language-html">
+&lt;ul&gt;
     {% for item in list %}
     &lt;li&gt;{{ item }}&lt;/li&gt;
     {% endfor %}
