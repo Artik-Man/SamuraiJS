@@ -76,6 +76,13 @@ export class Builder {
                 env.addGlobal(key, config.nunjucks.globals[key]);
             })
         }
+        
+        // adding custom filters
+        if (config.nunjucks?.filters) {
+            Object.keys(config.nunjucks.filters).forEach(key => {
+                env.addFilter(key, config.nunjucks.filters[key]);
+            })
+        }
     }
 
 
